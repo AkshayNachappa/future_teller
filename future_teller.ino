@@ -13,7 +13,7 @@ char keys[ROWS][COLS] =
 
 byte rowPins[ROWS] = {13, 12, 14, 27}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {26, 25, 33}; //connect to the column pinouts of the keypad
-
+// defining pins ,keypad and variables
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 String x[99][2];
 const int ledpin = 2;
@@ -33,22 +33,20 @@ void setup() {
   // put your setup code here, to run once:
 
 Serial.begin(300);
-//Serial.println("press 1 to know your occupation after 5 years");
 delay(300);
-//Serial.println("press 2 to know which actress is your best friend's crush");
 //for random consecutive numbers 
 randomSeed(analogRead(0));
 
 
-// defines variables
 
+// for PWM of motor 
  ledcSetup(ledChannel,freq,resolution);
  ledcAttachPin(ledpin,ledChannel);
  ledcSetup(ledChannel2,freq,resolution);
  ledcAttachPin(ledpin2,ledChannel2);
-pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+pinMode(trigPin, OUTPUT); 
 pinMode(echoPin, INPUT);
-//pinMode(2,OUTPUT);
+
 }
 
 void loop() 
@@ -163,18 +161,19 @@ distance= duration*0.034/2;//
            
      
 };
-if (distance<20)
+     // distance from ultrasonic 
+if (distance<20) 
  {
   
   delay(1000);
   for(i=0;i<=255;i++)
-  {
+  { //PWM for motors
     ledcWrite(ledChannel,i);
     ledcWrite(ledChannel2,i);
     delay(64);
   }
   //digitalWrite(2,HIGH);
-  
+  // displayed questions
   Serial.println("In the future");
   Serial.println("1 - you'll be denied from...");
   Serial.println("2 - your honeymoon destination will be....");
@@ -198,16 +197,16 @@ if (distance<20)
     {
       key = keypad.getKey();
     }
-//     
-//     ledcWrite(ledChannel,100);
-//     ledcWrite(ledChannel2,0);     
-//     delay(3000);
+    
+    ledcWrite(ledChannel,100);
+    ledcWrite(ledChannel2,0);     
+    delay(3000);
         
-//    ledcWrite(ledChannel2,100);
-//    ledcWrite(ledChannel,0);
-//    delay(3000);
-//    ledcWrite(ledChannel2,0);
-//    ledcWrite(ledChannel,0);    
+   ledcWrite(ledChannel2,100);
+   ledcWrite(ledChannel,0);
+   delay(3000);
+   ledcWrite(ledChannel2,0);
+   ledcWrite(ledChannel,0);    
        
   Serial.print("You have pressed ");
   Serial.print(key);
@@ -235,7 +234,7 @@ if (distance<20)
     delay(500);
    }
     
-   
+   // random answer generation 
 
    if (key=='1')
    {
